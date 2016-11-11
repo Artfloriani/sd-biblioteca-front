@@ -1,0 +1,42 @@
+<ion-content>
+
+  <div class="hero">
+    <div id="ana-image">
+    </div>
+    <h2>Biblioteca da Cris</h2>
+    <h3>A mais completa biblioteca de JAVA</h3>
+  </div>
+
+  <div class="content">
+
+    <div id="name-form" *ngIf="!user.name">
+      <p>Para utilizar a biblioteca, digite seu nome</p>
+      <ion-item >
+        <ion-label >Nome: </ion-label>
+        <ion-input type="text" [(ngModel)]="inputName" (keyup.enter)="entrar()"></ion-input>
+        <button ion-button clear item-right (click)="emprestar(null)" >
+          Entrar
+        </button>
+      </ion-item>
+      
+    </div>
+
+    <ion-list *ngIf="books">
+      <span *ngFor="let book of books">
+      <ion-item class="book-item">
+        <h2>{{book.name}}</h2>
+        <p color="available" *ngIf="canBorrow(book)">Disponível</p>
+        <p color="danger" *ngIf="canReserve(book)">Indisponível</p>
+      </ion-item>
+
+      <ion-item *ngIf="canBorrow(book) || canRenew(book) || canReturn(book) || canReserve(book)" class="button-border">
+        <button ion-button full color="available" item-right *ngIf="canBorrow(book)" (click)="emprestar(book)">Emprestar</button>
+        <button ion-button full  item-right *ngIf="canRenew(book)" (click)="renovar(book)">Renovar</button>
+        <button ion-button full  item-right *ngIf="canReturn(book)" (click)="devolver(book)">Devolver</button>
+        <button ion-button full  item-right *ngIf="canReserve(book)" (click)="reservar(book)">Reservar</button>
+      </ion-item>
+      </span>
+    </ion-list>
+  </div>
+
+</ion-content>
